@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+* {
+  @apply selection:bg-red-400 selection:text-white;
+}

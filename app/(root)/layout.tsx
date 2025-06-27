@@ -4,7 +4,7 @@ import React from "react";
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex max-h-screen min-h-screen overflow-hidden">
+    <div className="flex h-screen overflow-hidden">
       <Sidebar />
       <div className="flex w-full flex-col">
         <Header />

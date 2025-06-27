@@ -8,7 +8,7 @@ const RecentUploadFileList = ({
 }) => {
   return (
     <div className="h-full overflow-auto rounded-[20px] bg-white p-8">
-      <h2 className="text-2xl text-neutral-800">最近上传的文件</h2>
+      <p className="mb-2 text-2xl text-neutral-800">最近上传的文件</p>
       {files.documents.length > 0 ? (
         <div className="grid w-full grid-cols-4 gap-6">
           {files.documents.map((file: Models.Document) => (

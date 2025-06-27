@@ -28,7 +28,7 @@ const Page = async ({
       : 0;
 
   return (
-    <div className="mx-auto flex w-full flex-col items-center gap-8 overflow-auto">
+    <div className="mx-auto flex size-full flex-col items-center gap-8 overflow-auto">
       <div className="w-full">
         <div className="mt-2 flex flex-col justify-between sm:flex-row sm:items-center">
           <p>

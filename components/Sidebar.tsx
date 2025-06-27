@@ -5,7 +5,7 @@ import SidebarNav from "./SidebarNav";
 
 const Sidebar = () => {
   return (
-    <div className="flex w-sm flex-col px-2 py-4">
+    <div className="flex w-100 flex-col overflow-x-auto px-2 py-4">
       <SidebarNav />
       <Image
         src="/images/files-2.png"

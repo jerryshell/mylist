@@ -12,7 +12,7 @@ const Card = async ({ file }: { file: Models.Document }) => {
     <Link
       href={file.url}
       target="_blank"
-      className="flex cursor-pointer flex-col gap-6 rounded-2xl bg-white p-5 shadow-sm transition-all hover:shadow-xl"
+      className="flex cursor-pointer flex-col gap-6 rounded-2xl bg-white p-4 shadow-sm transition-all hover:shadow-xl"
     >
       <div className="flex justify-between">
         <Thumbnail

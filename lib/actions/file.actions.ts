@@ -6,9 +6,14 @@ import { ID, Models, Query } from "node-appwrite";
 import { constructFileUrl, getFileType, totalSizeInBytes } from "../utils";
 import { createAdminClient } from "../appwrite";
 import { appwriteConfig } from "../appwrite/config";
+import { redirect } from "next/navigation";
 
 export const uploadFile = async ({ file }: { file: File }) => {
   const currentUser = await getCurrentUser();
+  if (!currentUser) {
+    return redirect("/login");
+  }
+
   const { storage, databases } = await createAdminClient();
 
   const inputFile = InputFile.fromBuffer(file, file.name);
@@ -92,30 +97,24 @@ export const getFiles = async ({
   sort?: string;
   limit?: number;
 }) => {
+  const currentUser = await getCurrentUser();
+  if (!currentUser) {
+    return redirect("/login");
+  }
+
   const { databases } = await createAdminClient();
 
-  try {
-    const currentUser = await getCurrentUser();
+  sort = sort ? sort : "$createdAt-desc";
 
-    if (!currentUser) {
-      throw new Error("User not found");
-    }
+  const queries = buildQueries(currentUser, types, searchText, sort, limit);
 
-    sort = sort ? sort : "$createdAt-desc";
+  const files = await databases.listDocuments(
+    appwriteConfig.databaseId,
+    appwriteConfig.collectionUserFileId,
+    queries,
+  );
 
-    const queries = buildQueries(currentUser, types, searchText, sort, limit);
-
-    const files = await databases.listDocuments(
-      appwriteConfig.databaseId,
-      appwriteConfig.collectionUserFileId,
-      queries,
-    );
-
-    return files;
-  } catch (e) {
-    console.error("Failed to get files", e);
-    throw e;
-  }
+  return files;
 };
 
 export const renameFile = async ({
@@ -129,22 +128,17 @@ export const renameFile = async ({
 }) => {
   const { databases } = await createAdminClient();
 
-  try {
-    const newName = `${name}.${extension}`;
-    const updatedFile = await databases.updateDocument(
-      appwriteConfig.databaseId,
-      appwriteConfig.collectionUserFileId,
-      fileId,
-      {
-        name: newName,
-      },
-    );
+  const newName = `${name}.${extension}`;
+  const updatedFile = await databases.updateDocument(
+    appwriteConfig.databaseId,
+    appwriteConfig.collectionUserFileId,
+    fileId,
+    {
+      name: newName,
+    },
+  );
 
-    return updatedFile;
-  } catch (e) {
-    console.error("Failed to rename files", e);
-    throw e;
-  }
+  return updatedFile;
 };
 
 export const updateFileUsers = async ({
@@ -156,21 +150,16 @@ export const updateFileUsers = async ({
 }) => {
   const { databases } = await createAdminClient();
 
-  try {
-    const updatedFile = await databases.updateDocument(
-      appwriteConfig.databaseId,
-      appwriteConfig.collectionUserFileId,
-      fileId,
-      {
-        users: emails,
-      },
-    );
+  const updatedFile = await databases.updateDocument(
+    appwriteConfig.databaseId,
+    appwriteConfig.collectionUserFileId,
+    fileId,
+    {
+      users: emails,
+    },
+  );
 
-    return updatedFile;
-  } catch (e) {
-    console.error("Failed to update userFile", e);
-    throw e;
-  }
+  return updatedFile;
 };
 
 export const deleteFile = async ({
@@ -182,63 +171,56 @@ export const deleteFile = async ({
 }) => {
   const { databases, storage } = await createAdminClient();
 
-  try {
-    const deletedFile = await databases.deleteDocument(
-      appwriteConfig.databaseId,
-      appwriteConfig.collectionUserFileId,
-      fileId,
-    );
+  const deletedFile = await databases.deleteDocument(
+    appwriteConfig.databaseId,
+    appwriteConfig.collectionUserFileId,
+    fileId,
+  );
 
-    if (deletedFile) {
-      await storage.deleteFile(appwriteConfig.bucketId, bucketFileId);
-    }
-
-    return { status: "success" };
-  } catch (e) {
-    console.error("Failed to delete file", e);
-    throw e;
+  if (deletedFile) {
+    await storage.deleteFile(appwriteConfig.bucketId, bucketFileId);
   }
+
+  return { status: "success" };
 };
 
 declare type FileType = "document" | "image" | "video" | "audio" | "other";
 
 export async function getTotalSpaceUsed() {
-  try {
-    const currentUser = await getCurrentUser();
-    const { databases } = await createAdminClient();
-
-    const userFileList = await databases.listDocuments(
-      appwriteConfig.databaseId,
-      appwriteConfig.collectionUserFileId,
-      [Query.equal("userId", [currentUser.$id]), Query.limit(40960)],
-    );
-
-    const totalSpace = {
-      image: { size: 0, latestDate: "" },
-      document: { size: 0, latestDate: "" },
-      video: { size: 0, latestDate: "" },
-      audio: { size: 0, latestDate: "" },
-      other: { size: 0, latestDate: "" },
-      used: 0,
-      all: totalSizeInBytes,
-    };
-
-    userFileList.documents.forEach((file) => {
-      const fileType = file.type as FileType;
-      totalSpace[fileType].size += file.size;
-      totalSpace.used += file.size;
-
-      if (
-        !totalSpace[fileType].latestDate ||
-        new Date(file.$updatedAt) > new Date(totalSpace[fileType].latestDate)
-      ) {
-        totalSpace[fileType].latestDate = file.$updatedAt;
-      }
-    });
-
-    return totalSpace;
-  } catch (e) {
-    console.error("Error calculating total space used", e);
-    throw e;
+  const currentUser = await getCurrentUser();
+  if (!currentUser) {
+    return redirect("/login");
   }
+  const { databases } = await createAdminClient();
+
+  const userFileList = await databases.listDocuments(
+    appwriteConfig.databaseId,
+    appwriteConfig.collectionUserFileId,
+    [Query.equal("userId", [currentUser.$id]), Query.limit(40960)],
+  );
+
+  const totalSpace = {
+    image: { size: 0, latestDate: "" },
+    document: { size: 0, latestDate: "" },
+    video: { size: 0, latestDate: "" },
+    audio: { size: 0, latestDate: "" },
+    other: { size: 0, latestDate: "" },
+    used: 0,
+    all: totalSizeInBytes,
+  };
+
+  userFileList.documents.forEach((file) => {
+    const fileType = file.type as FileType;
+    totalSpace[fileType].size += file.size;
+    totalSpace.used += file.size;
+
+    if (
+      !totalSpace[fileType].latestDate ||
+      new Date(file.$updatedAt) > new Date(totalSpace[fileType].latestDate)
+    ) {
+      totalSpace[fileType].latestDate = file.$updatedAt;
+    }
+  });
+
+  return totalSpace;
 }

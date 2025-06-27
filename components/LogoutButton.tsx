@@ -1,12 +1,16 @@
 "use client";
 
 import { logout } from "@/lib/actions/user.actions";
+import { redirect } from "next/navigation";
 
 const LogoutButton = () => {
   return (
     <button
       className="flex size-8 cursor-pointer items-center justify-center text-red-400"
-      onClick={logout}
+      onClick={async () => {
+        await logout();
+        redirect("/login");
+      }}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

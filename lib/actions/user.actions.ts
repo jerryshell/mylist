@@ -6,19 +6,21 @@ import { createAdminClient, createSessionClient } from "../appwrite";
 import { redirect } from "next/navigation";
 
 export const getCurrentUser = async () => {
-  return createSessionClient()
-    .then((sessionClient) => sessionClient.account.get())
-    .catch(() => {
-      redirect("/login");
-    });
+  const sessionClient = await createSessionClient();
+  if (!sessionClient) {
+    return null;
+  }
+
+  return await sessionClient.account.get().catch(() => redirect("/login"));
 };
 
 export const logout = async () => {
-  return createSessionClient()
-    .then((sessionClient) => sessionClient.account.deleteSession("current"))
-    .finally(async () => {
-      redirect("/login");
-    });
+  const sessionClient = await createSessionClient();
+  if (!sessionClient) {
+    return null;
+  }
+
+  await sessionClient.account.deleteSession("current");
 };
 
 export const getUserById = async (id: string) => {

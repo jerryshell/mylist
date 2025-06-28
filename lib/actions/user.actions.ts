@@ -3,24 +3,15 @@
 import { ID } from "node-appwrite";
 import { cookies } from "next/headers";
 import { createAdminClient, createSessionClient } from "../appwrite";
-import { redirect } from "next/navigation";
 
 export const getCurrentUser = async () => {
   const sessionClient = await createSessionClient();
-  if (!sessionClient) {
-    return null;
-  }
-
-  return await sessionClient.account.get().catch(() => redirect("/login"));
+  return await sessionClient.account.get();
 };
 
 export const logout = async () => {
   const sessionClient = await createSessionClient();
-  if (!sessionClient) {
-    return null;
-  }
-
-  await sessionClient.account.deleteSession("current");
+  return await sessionClient.account.deleteSession("current");
 };
 
 export const getUserById = async (id: string) => {

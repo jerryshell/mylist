@@ -6,13 +6,9 @@ import { ID, Models, Query } from "node-appwrite";
 import { constructFileUrl, getFileType, totalSizeInBytes } from "../utils";
 import { createAdminClient } from "../appwrite";
 import { appwriteConfig } from "../appwrite/config";
-import { redirect } from "next/navigation";
 
 export const uploadFile = async ({ file }: { file: File }) => {
   const currentUser = await getCurrentUser();
-  if (!currentUser) {
-    return redirect("/login");
-  }
 
   const { storage, databases } = await createAdminClient();
 
@@ -98,9 +94,6 @@ export const getFiles = async ({
   limit?: number;
 }) => {
   const currentUser = await getCurrentUser();
-  if (!currentUser) {
-    return redirect("/login");
-  }
 
   const { databases } = await createAdminClient();
 
@@ -188,9 +181,7 @@ declare type FileType = "document" | "image" | "video" | "audio" | "other";
 
 export async function getTotalSpaceUsed() {
   const currentUser = await getCurrentUser();
-  if (!currentUser) {
-    return redirect("/login");
-  }
+
   const { databases } = await createAdminClient();
 
   const userFileList = await databases.listDocuments(

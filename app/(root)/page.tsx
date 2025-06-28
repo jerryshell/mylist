@@ -3,12 +3,13 @@ import DashboardFileSummary from "@/components/DashboardFileSummary";
 import RecentUploadFileList from "@/components/RecentUploadFileList";
 import { getFiles, getTotalSpaceUsed } from "@/lib/actions/file.actions";
 import { getUsageSummary } from "@/lib/utils";
+import { redirect } from "next/navigation";
 
 const Dashboard = async () => {
   const [files, totalSpace] = await Promise.all([
     getFiles({ types: [], limit: 16 }),
     getTotalSpaceUsed(),
-  ]);
+  ]).catch(() => redirect("/login"));
 
   const usageSummary = getUsageSummary(totalSpace);
 

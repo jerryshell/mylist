@@ -4,6 +4,7 @@ import { getFiles } from "@/lib/actions/file.actions";
 import { Models } from "node-appwrite";
 import Card from "@/components/Card";
 import { convertFileSize } from "@/lib/utils";
+import { redirect } from "next/navigation";
 
 const Page = async ({
   searchParams,
@@ -20,7 +21,9 @@ const Page = async ({
 
   const types = [type];
 
-  const files = await getFiles({ types, searchText, sort });
+  const files = await getFiles({ types, searchText, sort }).catch(() =>
+    redirect("/login"),
+  );
 
   const sizeSum =
     files.documents.length > 0

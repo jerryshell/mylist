@@ -1,7 +1,14 @@
 import Image from "next/image";
 import LoginForm from "@/components/LoginForm";
+import { getCurrentUser } from "@/lib/actions/user.actions";
+import { redirect } from "next/navigation";
 
-const LoginPage = () => {
+const LoginPage = async () => {
+  const currentUser = await getCurrentUser().catch(() => {});
+  if (currentUser) {
+    return redirect("/");
+  }
+
   return (
     <div className="flex min-h-screen">
       <div className="flex w-2/5 justify-center rounded-r-xl bg-red-400">

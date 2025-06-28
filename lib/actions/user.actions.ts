@@ -41,8 +41,11 @@ export const verifyOtp = async (userId: string, code: string) => {
   });
 
   (await cookies()).set("appwrite-session", session.secret, {
-    secure: true,
+    path: "/",
     httpOnly: true,
+    sameSite: "lax",
+    secure: true,
+    expires: new Date(session.expire),
   });
 
   return session.$id;

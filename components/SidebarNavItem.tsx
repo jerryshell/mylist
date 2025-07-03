@@ -19,7 +19,7 @@ const SidebarNavItem = ({
   return (
     <Link key={name} href={url}>
       <li
-        className={`flex h-16 items-center gap-2 rounded-full pl-12 text-neutral-600 ${isActive && "bg-red-400 text-white"}`}
+        className={`flex h-16 items-center gap-2 rounded-full pl-12 text-neutral-600 ${isActive && "bg-primary text-white"}`}
       >
         {icon}
         <p>{name}</p>

@@ -38,7 +38,7 @@ const FileUploader = () => {
 
   return (
     <>
-      <label className="flex w-3xs cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-dashed border-red-300 py-1.5 text-red-400">
+      <label className="text-primary flex w-3xs cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-dashed border-red-300 py-1.5">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -88,7 +88,7 @@ const FileUploader = () => {
 
                 <button
                   onClick={() => handleRemoveFile(file)}
-                  className="text-red-400"
+                  className="text-primary"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

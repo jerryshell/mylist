@@ -39,7 +39,7 @@ const Sort = () => {
 
   return (
     <select
-      className="rounded-lg border border-gray-300 bg-white p-2 text-sm text-gray-900 focus:border-red-400 focus:ring-red-400"
+      className="focus:border-primary focus:ring-primary rounded-lg border border-gray-300 bg-white p-2 text-sm text-gray-900"
       defaultValue={sortTypes[0].value}
       onChange={(e) => handleSort(e.target.value)}
     >

@@ -18,7 +18,7 @@ const Thumbnail = ({
 
   return (
     <div
-      className={`flex size-10 items-center justify-center overflow-hidden rounded-full shadow-xl ring-2 ring-red-400 ${className}`}
+      className={`ring-primary flex size-10 items-center justify-center overflow-hidden rounded-full shadow-xl ring-2 ${className}`}
     >
       <Image
         src={isImage ? url : getFileIcon(extension, type)}

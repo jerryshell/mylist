@@ -146,7 +146,7 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
             />
             <div className="flex justify-around p-4">
               <button
-                className="rounded bg-red-400 p-2 text-white shadow"
+                className="bg-primary rounded p-2 text-white shadow"
                 onClick={() => {
                   setOpenRename(false);
                   setNewFileName("");
@@ -155,7 +155,7 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
                 取消
               </button>
               <button
-                className="flex gap-1 rounded bg-red-400 p-2 text-white shadow"
+                className="bg-primary flex gap-1 rounded p-2 text-white shadow"
                 onClick={async () => {
                   setPending(true);
                   await doRenameFile();

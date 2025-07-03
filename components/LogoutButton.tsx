@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 const LogoutButton = () => {
   return (
     <button
-      className="flex size-8 cursor-pointer items-center justify-center text-red-400"
+      className="text-primary flex size-8 cursor-pointer items-center justify-center"
       onClick={async () => {
         await logout();
         redirect("/login");

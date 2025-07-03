@@ -11,7 +11,7 @@ const LoginPage = async () => {
 
   return (
     <div className="flex min-h-screen">
-      <div className="flex w-2/5 justify-center rounded-r-xl bg-red-400">
+      <div className="bg-primary flex w-2/5 justify-center rounded-r-xl">
         <div className="flex flex-col justify-center gap-12">
           <div className="flex flex-col gap-4 text-white">
             <h1 className="text-2xl font-bold">MyList</h1>

@@ -22,7 +22,7 @@ import {
 
 export const Chart = ({ used }: { used: number }) => {
   return (
-    <div className="flex rounded-2xl bg-red-400 p-4 text-white">
+    <div className="bg-primary flex rounded-2xl p-4 text-white">
       <RadialBarChart
         width={250}
         height={200}
@@ -36,7 +36,7 @@ export const Chart = ({ used }: { used: number }) => {
           gridType="circle"
           radialLines={false}
           stroke="none"
-          className="first:fill-white/20 last:fill-red-400"
+          className="last:fill-primary first:fill-white/20"
           polarRadius={[86, 74]}
         />
         <RadialBar dataKey="value" cornerRadius={10} />

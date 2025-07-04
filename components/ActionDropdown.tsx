@@ -113,7 +113,7 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
               </li>
               <li>
                 <span
-                  className="flex gap-1 px-4 py-2 text-red-600 hover:bg-gray-100"
+                  className="text-error flex gap-1 px-4 py-2 hover:bg-gray-100"
                   onClick={async () => {
                     setPending(true);
                     await doDeleteFile();
@@ -132,7 +132,7 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
       {/* Rename */}
       {openRename && (
         <div
-          className="absolute top-0 left-0 z-40 flex size-full cursor-default items-center justify-center"
+          className="absolute top-0 left-0 z-10 flex size-full cursor-default items-center justify-center"
           onClick={(e) => e.preventDefault()}
         >
           <div className="flex h-50 w-[400px] flex-col justify-center gap-2 rounded-2xl bg-white p-5 shadow-2xl">

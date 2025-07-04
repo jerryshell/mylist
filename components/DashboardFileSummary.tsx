@@ -30,12 +30,12 @@ const DashboardFileSummary = ({
                 alt="uploaded image"
                 className="absolute top-[-25px] -left-3 z-10 w-[190px] object-contain"
               />
-              <h4 className="relative z-20 w-full text-right">
+              <h4 className="relative z-10 w-full text-right">
                 {convertFileSize(summary.size) || 0}
               </h4>
             </div>
 
-            <h5 className="relative z-20 text-center">{summary.title}</h5>
+            <h5 className="relative z-10 text-center">{summary.title}</h5>
             <hr className="h-0.5 border-t-0 bg-neutral-200" />
             <p className="text-center">
               {summary.latestDate

@@ -38,7 +38,7 @@ const FileUploader = () => {
 
   return (
     <>
-      <label className="text-primary flex w-3xs cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-dashed border-red-300 py-1.5">
+      <label className="text-primary border-primary flex w-3xs cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-dashed py-1.5">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -61,7 +61,7 @@ const FileUploader = () => {
       </label>
 
       {fileList.length > 0 && (
-        <ul className="fixed right-10 bottom-10 flex size-full h-fit w-sm flex-col gap-2 rounded-xl bg-white p-4 text-neutral-600 shadow">
+        <ul className="fixed right-10 bottom-10 z-20 flex size-full h-fit w-sm flex-col gap-2 rounded-xl bg-white p-4 text-neutral-600 shadow">
           <div className="text-neutral-600">上传中...</div>
           {fileList.map((file, index) => {
             const { type, extension } = getFileType(file.name);

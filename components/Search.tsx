@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { getFiles } from "@/lib/actions/file.actions";
+import { getUserFileList } from "@/lib/actions/file.actions";
 import { Models } from "node-appwrite";
 import Thumbnail from "@/components/Thumbnail";
 import { useDebounce } from "use-debounce";
@@ -23,8 +23,11 @@ const Search = () => {
         setOpen(false);
         return;
       }
-      const files = await getFiles({ types: [], searchText: debouncedQuery });
-      setResults(files.documents);
+      const fileList = await getUserFileList({
+        types: [],
+        searchText: debouncedQuery,
+      });
+      setResults(fileList.documents);
       setOpen(true);
     };
 

@@ -45,14 +45,14 @@ export const uploadFile = async ({ file }: { file: File }) => {
     });
 };
 
-const buildQueries = (
+const buildQueryList = (
   currentUser: Models.User<Models.Preferences>,
   types: string[],
   searchText: string,
   sort: string,
   limit?: number,
 ) => {
-  const queries = [
+  const queryList = [
     Query.or([
       Query.equal("userId", [currentUser.$id]),
       Query.contains("sharedUser", [currentUser.email]),
@@ -60,29 +60,29 @@ const buildQueries = (
   ];
 
   if (types.length > 0) {
-    queries.push(Query.equal("type", types));
+    queryList.push(Query.equal("type", types));
   }
 
   if (searchText) {
-    queries.push(Query.contains("name", searchText));
+    queryList.push(Query.contains("name", searchText));
   }
 
   if (limit) {
-    queries.push(Query.limit(limit));
+    queryList.push(Query.limit(limit));
   }
 
   if (sort) {
     const [sortBy, orderBy] = sort.split("-");
 
-    queries.push(
+    queryList.push(
       orderBy === "asc" ? Query.orderAsc(sortBy) : Query.orderDesc(sortBy),
     );
   }
 
-  return queries;
+  return queryList;
 };
 
-export const getFiles = async ({
+export const getUserFileList = async ({
   types = [],
   searchText = "",
   sort,
@@ -99,15 +99,15 @@ export const getFiles = async ({
 
   sort = sort ? sort : "$createdAt-desc";
 
-  const queries = buildQueries(currentUser, types, searchText, sort, limit);
+  const queryList = buildQueryList(currentUser, types, searchText, sort, limit);
 
-  const files = await databases.listDocuments(
+  const userFileList = await databases.listDocuments(
     appwriteConfig.databaseId,
     appwriteConfig.collectionUserFileId,
-    queries,
+    queryList,
   );
 
-  return files;
+  return userFileList;
 };
 
 export const renameFile = async ({
@@ -134,12 +134,12 @@ export const renameFile = async ({
   return updatedFile;
 };
 
-export const updateFileUsers = async ({
+export const updateSharedUser = async ({
   fileId,
-  emails,
+  emailList,
 }: {
   fileId: string;
-  emails: string[];
+  emailList: string[];
 }) => {
   const { databases } = await createAdminClient();
 
@@ -148,7 +148,7 @@ export const updateFileUsers = async ({
     appwriteConfig.collectionUserFileId,
     fileId,
     {
-      users: emails,
+      sharedUser: emailList,
     },
   );
 

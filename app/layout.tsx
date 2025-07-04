@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "MyList",
-  description: "Manage your files the best way",
+  description: "以最佳方式管理个人文件",
 };
 
 export default function RootLayout({

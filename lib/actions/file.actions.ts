@@ -200,16 +200,16 @@ export async function getTotalSpaceUsed() {
     all: totalSizeInBytes,
   };
 
-  userFileList.documents.forEach((file) => {
-    const fileType = file.type as FileType;
-    totalSpace[fileType].size += file.size;
-    totalSpace.used += file.size;
+  userFileList.documents.forEach((userFile) => {
+    const fileType = userFile.type as FileType;
+    totalSpace[fileType].size += userFile.size;
+    totalSpace.used += userFile.size;
 
     if (
       !totalSpace[fileType].latestDate ||
-      new Date(file.$updatedAt) > new Date(totalSpace[fileType].latestDate)
+      new Date(userFile.$updatedAt) > new Date(totalSpace[fileType].latestDate)
     ) {
-      totalSpace[fileType].latestDate = file.$updatedAt;
+      totalSpace[fileType].latestDate = userFile.$updatedAt;
     }
   });
 

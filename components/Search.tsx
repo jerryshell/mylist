@@ -12,30 +12,26 @@ const Search = () => {
   const searchQuery = searchParams.get("query") || "";
 
   const [query, setQuery] = useState("");
-  const [resultList, setResultList] = useState<Models.Document[]>([]);
+  const [userFileList, setUserFileList] = useState<Models.Document[]>([]);
   const [open, setOpen] = useState(false);
 
   const router = useRouter();
 
   const [debouncedQuery] = useDebounce(query, 300);
 
-  useEffect(() => {
-    const fetchFileList = async () => {
-      if (debouncedQuery.length === 0) {
-        setResultList([]);
-        setOpen(false);
-        return;
-      }
-      const fileList = await getUserFileList({
-        types: [],
-        searchText: debouncedQuery,
-      });
-      setResultList(fileList.documents);
-      setOpen(true);
-    };
-
-    fetchFileList();
-  }, [debouncedQuery]);
+  const fetchFileList = async (query: string) => {
+    if (query.length === 0) {
+      setUserFileList([]);
+      setOpen(false);
+      return;
+    }
+    const userFileList = await getUserFileList({
+      types: [],
+      searchText: query,
+    });
+    setUserFileList(userFileList.documents);
+    setOpen(true);
+  };
 
   useEffect(() => {
     if (!searchQuery) {
@@ -43,27 +39,20 @@ const Search = () => {
     }
   }, [searchQuery]);
 
+  useEffect(() => {
+    fetchFileList(debouncedQuery);
+  }, [debouncedQuery]);
+
   const handleItemClick = (file: Models.Document) => {
     setOpen(false);
-    setResultList([]);
+    setUserFileList([]);
     router.push(`/${file.type}?query=${query}`);
   };
 
   return (
     <div className="w-full">
       <div className="flex items-center rounded-full px-4 py-2 shadow">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="size-6"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
-            clipRule="evenodd"
-          />
-        </svg>
+        <SearchIcon />
         <input
           className="mx-2 w-full outline-hidden"
           placeholder="搜索"
@@ -72,25 +61,24 @@ const Search = () => {
         {open && (
           <div className="absolute top-16 left-0 z-50 flex w-full justify-center">
             <ul className="flex w-2/3 cursor-pointer flex-col gap-3 rounded-2xl bg-white p-4 shadow">
-              {resultList.length > 0 ? (
-                resultList.map((file) => (
+              {userFileList.length > 0 ? (
+                userFileList.map((userFile) => (
                   <li
                     className="flex items-center justify-between rounded p-1 hover:bg-neutral-100"
-                    key={file.$id}
-                    onClick={() => handleItemClick(file)}
+                    key={userFile.$id}
+                    onClick={() => handleItemClick(userFile)}
                   >
                     <div className="flex items-center gap-4">
                       <Thumbnail
-                        type={file.type}
-                        extension={file.extension}
-                        url={file.url}
+                        type={userFile.type}
+                        extension={userFile.extension}
+                        url={userFile.url}
                         className="size-9 min-w-9"
                       />
-                      <p className="truncate text-neutral-600">{file.name}</p>
+                      <p className="truncate">{userFile.name}</p>
                     </div>
-
-                    <p className="truncate text-neutral-800">
-                      {new Date(file.$createdAt).toLocaleString()}
+                    <p className="truncate text-neutral-400">
+                      {new Date(userFile.$createdAt).toLocaleString()}
                     </p>
                   </li>
                 ))
@@ -104,5 +92,20 @@ const Search = () => {
     </div>
   );
 };
+
+const SearchIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className="size-6"
+  >
+    <path
+      fillRule="evenodd"
+      d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
 
 export default Search;

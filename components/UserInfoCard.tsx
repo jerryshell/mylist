@@ -6,7 +6,7 @@ const UserInfoCard = async () => {
   const currentUser = await getCurrentUser().catch(() => redirect("/login"));
 
   return (
-    <div className="bg-primary/10 mt-4 flex items-center gap-2 rounded-full p-4 text-neutral-800">
+    <div className="mt-4 flex items-center gap-2 p-4 text-neutral-800">
       <Image
         src="/images/avatar.png"
         alt="avatar"

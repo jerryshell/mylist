@@ -39,4 +39,5 @@ const FileCard = async ({ file }: { file: Models.Document }) => {
     </Link>
   );
 };
+
 export default FileCard;

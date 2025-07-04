@@ -1,4 +1,4 @@
-import { Chart } from "@/components/Chart";
+import Chart from "@/components/Chart";
 import DashboardFileSummary from "@/components/DashboardFileSummary";
 import RecentUploadFileList from "@/components/RecentUploadFileList";
 import { getTotalSpaceUsed } from "@/lib/actions/file.actions";

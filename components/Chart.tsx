@@ -20,7 +20,7 @@ import {
   RadialBarChart,
 } from "recharts";
 
-export const Chart = ({ used }: { used: number }) => {
+const Chart = ({ used }: { used: number }) => {
   return (
     <div className="bg-primary flex rounded-2xl p-4 text-white">
       <RadialBarChart
@@ -82,3 +82,5 @@ export const Chart = ({ used }: { used: number }) => {
     </div>
   );
 };
+
+export default Chart;

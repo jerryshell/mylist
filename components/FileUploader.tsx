@@ -1,12 +1,14 @@
 "use client";
 
 import { convertFileToUrl, getFileType } from "@/lib/utils";
-import Image from "next/image";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Thumbnail from "./Thumbnail";
 import { uploadFile } from "@/lib/actions/file.actions";
+import { useRouter } from "next/navigation";
 
 const FileUploader = () => {
+  const router = useRouter();
+
   const [fileList, setFileList] = useState<File[]>([]);
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +26,9 @@ const FileUploader = () => {
     const uploadPromiseList = fileList.map(async (file) => {
       return uploadFile({ file }).then((uploadedFile) => {
         if (uploadedFile) {
-          setFileList((prev) => prev.filter((f) => f.name !== file.name));
+          setFileList((prevFileList) =>
+            prevFileList.filter((f) => f.name !== file.name),
+          );
         }
       });
     });
@@ -32,9 +36,15 @@ const FileUploader = () => {
     await Promise.all(uploadPromiseList);
   };
 
-  const handleRemoveFile = (f: File) => {
-    setFileList((prev) => prev.filter((file) => file !== f));
+  const handleRemoveFile = (file: File) => {
+    setFileList((prevFileList) => prevFileList.filter((f) => f !== file));
   };
+
+  useEffect(() => {
+    if (fileList.length <= 0) {
+      router.refresh();
+    }
+  }, [fileList, router]);
 
   return (
     <>
@@ -78,12 +88,7 @@ const FileUploader = () => {
 
                 <div className="flex flex-1 flex-col gap-2 truncate text-sm font-semibold">
                   <p className="truncate">{file.name}</p>
-                  <Image
-                    src="/icons/file-loader.gif"
-                    width={80}
-                    height={26}
-                    alt="Loader"
-                  />
+                  <progress className="progress progress-primary w-full"></progress>
                 </div>
 
                 <button

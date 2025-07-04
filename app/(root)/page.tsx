@@ -1,16 +1,12 @@
 import { Chart } from "@/components/Chart";
 import DashboardFileSummary from "@/components/DashboardFileSummary";
 import RecentUploadFileList from "@/components/RecentUploadFileList";
-import { getFiles, getTotalSpaceUsed } from "@/lib/actions/file.actions";
+import { getTotalSpaceUsed } from "@/lib/actions/file.actions";
 import { getUsageSummary } from "@/lib/utils";
 import { redirect } from "next/navigation";
 
 const Dashboard = async () => {
-  const [files, totalSpace] = await Promise.all([
-    getFiles({ types: [], limit: 16 }),
-    getTotalSpaceUsed(),
-  ]).catch(() => redirect("/login"));
-
+  const totalSpace = await getTotalSpaceUsed().catch(() => redirect("/login"));
   const usageSummary = getUsageSummary(totalSpace);
 
   return (
@@ -20,7 +16,7 @@ const Dashboard = async () => {
         <DashboardFileSummary usageSummary={usageSummary} />
       </div>
       <div className="flex-1">
-        <RecentUploadFileList files={files} />
+        <RecentUploadFileList />
       </div>
     </div>
   );

@@ -3,7 +3,7 @@
 import { InputFile } from "node-appwrite/file";
 import { getCurrentUser } from "./user.actions";
 import { ID, Models, Query } from "node-appwrite";
-import { constructFileUrl, getFileType, totalSizeInBytes } from "../utils";
+import { buildFileUrl, getFileType, totalSizeInBytes } from "../utils";
 import { createAdminClient } from "../appwrite";
 import { appwriteConfig } from "../appwrite/config";
 
@@ -22,7 +22,7 @@ export const uploadFile = async ({ file }: { file: File }) => {
 
   const userFileDocument = {
     name: bucketFile.name,
-    url: constructFileUrl(bucketFile.$id),
+    url: buildFileUrl(bucketFile.$id),
     type: getFileType(bucketFile.name).type,
     bucketFileId: bucketFile.$id,
     userId: currentUser.$id,

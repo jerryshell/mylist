@@ -4,16 +4,16 @@ export const convertFileToUrl = (file: File) => URL.createObjectURL(file);
 
 export const convertFileSize = (sizeInBytes: number, digits?: number) => {
   if (sizeInBytes < 1024) {
-    return sizeInBytes + " Bytes";
+    return `${sizeInBytes} Bytes`;
   } else if (sizeInBytes < 1024 * 1024) {
     const sizeInKB = sizeInBytes / 1024;
-    return sizeInKB.toFixed(digits || 1) + " KB";
+    return `${sizeInKB.toFixed(digits || 1)} KB`;
   } else if (sizeInBytes < 1024 * 1024 * 1024) {
     const sizeInMB = sizeInBytes / (1024 * 1024);
-    return sizeInMB.toFixed(digits || 1) + " MB";
+    return `${sizeInMB.toFixed(digits || 1)} MB`;
   } else {
     const sizeInGB = sizeInBytes / (1024 * 1024 * 1024);
-    return sizeInGB.toFixed(digits || 1) + " GB";
+    return `${sizeInGB.toFixed(digits || 1)} GB`;
   }
 };
 
@@ -28,52 +28,53 @@ export const calculatePercentage = (sizeInBytes: number) => {
   return Number(percentage.toFixed(2));
 };
 
+const documentExtensionList = [
+  "pdf",
+  "doc",
+  "docx",
+  "txt",
+  "xls",
+  "xlsx",
+  "csv",
+  "rtf",
+  "ods",
+  "ppt",
+  "odp",
+  "md",
+  "html",
+  "htm",
+  "epub",
+  "pages",
+  "fig",
+  "psd",
+  "ai",
+  "indd",
+  "xd",
+  "sketch",
+  "afdesign",
+  "afphoto",
+  "afphoto",
+];
+const imageExtensionList = ["jpg", "jpeg", "png", "gif", "bmp", "svg", "webp"];
+const videoExtensionList = ["mp4", "avi", "mov", "mkv", "webm"];
+const audioExtensionList = ["mp3", "wav", "ogg", "flac"];
+
 export const getFileType = (fileName: string) => {
   const extension = fileName.split(".").pop()?.toLowerCase();
+  if (!extension) {
+    return { type: "other", extension: "" };
+  }
 
-  if (!extension) return { type: "other", extension: "" };
-
-  const documentExtensions = [
-    "pdf",
-    "doc",
-    "docx",
-    "txt",
-    "xls",
-    "xlsx",
-    "csv",
-    "rtf",
-    "ods",
-    "ppt",
-    "odp",
-    "md",
-    "html",
-    "htm",
-    "epub",
-    "pages",
-    "fig",
-    "psd",
-    "ai",
-    "indd",
-    "xd",
-    "sketch",
-    "afdesign",
-    "afphoto",
-    "afphoto",
-  ];
-  const imageExtensions = ["jpg", "jpeg", "png", "gif", "bmp", "svg", "webp"];
-  const videoExtensions = ["mp4", "avi", "mov", "mkv", "webm"];
-  const audioExtensions = ["mp3", "wav", "ogg", "flac"];
-
-  if (documentExtensions.includes(extension)) {
+  if (documentExtensionList.includes(extension)) {
     return { type: "document", extension };
   }
-  if (imageExtensions.includes(extension)) {
+  if (imageExtensionList.includes(extension)) {
     return { type: "image", extension };
   }
-  if (videoExtensions.includes(extension)) {
+  if (videoExtensionList.includes(extension)) {
     return { type: "video", extension };
   }
-  if (audioExtensions.includes(extension)) {
+  if (audioExtensionList.includes(extension)) {
     return { type: "audio", extension };
   }
 
@@ -122,7 +123,6 @@ export const getFileIcon = (extension: string | undefined, type: string) => {
     case "aiff":
     case "alac":
       return "/icons/file-audio.svg";
-
     default:
       switch (type) {
         case "image":
@@ -139,11 +139,11 @@ export const getFileIcon = (extension: string | undefined, type: string) => {
   }
 };
 
-export const constructFileUrl = (bucketFileId: string) => {
+export const buildFileUrl = (bucketFileId: string) => {
   return `${appwriteConfig.endpoint}/storage/buckets/${appwriteConfig.bucketId}/files/${bucketFileId}/view?project=${appwriteConfig.projectId}`;
 };
 
-export const constructDownloadUrl = (bucketFileId: string) => {
+export const buildDownloadUrl = (bucketFileId: string) => {
   return `${appwriteConfig.endpoint}/storage/buckets/${appwriteConfig.bucketId}/files/${bucketFileId}/download?project=${appwriteConfig.projectId}`;
 };
 

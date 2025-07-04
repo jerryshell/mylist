@@ -2,7 +2,7 @@ import React from "react";
 import Sort from "@/components/Sort";
 import { getFiles } from "@/lib/actions/file.actions";
 import { Models } from "node-appwrite";
-import Card from "@/components/Card";
+import FileCard from "@/components/FileCard";
 import { convertFileSize } from "@/lib/utils";
 import { redirect } from "next/navigation";
 
@@ -21,8 +21,8 @@ const Page = async ({
 
   const types = [type];
 
-  const files = await getFiles({ types, searchText, sort }).catch(() =>
-    redirect("/login"),
+  const files = await getFiles({ types, searchText, sort, limit: 10240 }).catch(
+    () => redirect("/login"),
   );
 
   const sizeSum =
@@ -49,7 +49,7 @@ const Page = async ({
       {files.total > 0 ? (
         <div className="grid w-full grid-cols-4 gap-6">
           {files.documents.map((file: Models.Document) => (
-            <Card key={file.$id} file={file} />
+            <FileCard key={file.$id} file={file} />
           ))}
         </div>
       ) : (

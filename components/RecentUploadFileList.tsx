@@ -1,10 +1,10 @@
 import { Models } from "node-appwrite";
-import Card from "./Card";
+import FileCard from "./FileCard";
 import { getFiles } from "@/lib/actions/file.actions";
 import { redirect } from "next/navigation";
 
 const RecentUploadFileList = async () => {
-  const fileList = await getFiles({ types: [], limit: 16 }).catch(() =>
+  const fileList = await getFiles({ types: [], limit: 30 }).catch(() =>
     redirect("/login"),
   );
 
@@ -14,7 +14,7 @@ const RecentUploadFileList = async () => {
       {fileList.documents.length > 0 ? (
         <div className="flex flex-wrap gap-6">
           {fileList.documents.map((file: Models.Document) => (
-            <Card key={file.$id} file={file} />
+            <FileCard key={file.$id} file={file} />
           ))}
         </div>
       ) : (

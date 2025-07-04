@@ -140,7 +140,7 @@ const LoginForm = () => {
       )}
 
       {errorMessage && (
-        <p className="text-primary mx-auto w-fit rounded-xl bg-red-100 px-8 py-4 text-center text-sm">
+        <p className="text-primary bg-primary/10 mx-auto w-fit rounded-xl px-8 py-4 text-center text-sm">
           *{errorMessage}
         </p>
       )}

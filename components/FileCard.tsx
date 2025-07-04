@@ -5,7 +5,7 @@ import { convertFileSize } from "@/lib/utils";
 import { getUserById } from "@/lib/actions/user.actions";
 import ActionDropdown from "./ActionDropdown";
 
-const Card = async ({ file }: { file: Models.Document }) => {
+const FileCard = async ({ file }: { file: Models.Document }) => {
   const user = await getUserById(file.userId);
 
   return (
@@ -20,7 +20,7 @@ const Card = async ({ file }: { file: Models.Document }) => {
           extension={file.extension}
           url={file.url}
           className="!size-20"
-          imageClassName="!size-11"
+          imageClassName="!size-10"
         />
 
         <div className="flex flex-col items-end justify-between">
@@ -39,4 +39,4 @@ const Card = async ({ file }: { file: Models.Document }) => {
     </Link>
   );
 };
-export default Card;
+export default FileCard;

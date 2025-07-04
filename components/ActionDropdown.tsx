@@ -55,7 +55,7 @@ const ActionDropdown = ({ file }: { file: Models.Document }) => {
         <button
           id="dropdownMenuIconButton"
           data-dropdown-toggle="dropdownDots"
-          className="inline-flex items-center rounded-lg bg-gray-100 p-4 text-center text-sm font-medium text-gray-900 hover:bg-gray-200 focus:ring-4 focus:ring-gray-50 focus:outline-none"
+          className="inline-flex items-center rounded-lg p-4 text-center text-sm font-medium text-gray-900 transition-all hover:bg-gray-100 focus:ring-4 focus:ring-gray-50 focus:outline-none"
           type="button"
           onClick={(e) => {
             e.preventDefault();

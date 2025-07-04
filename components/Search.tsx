@@ -8,18 +8,21 @@ import { useDebounce } from "use-debounce";
 import { useEffect, useState } from "react";
 
 const Search = () => {
-  const [query, setQuery] = useState("");
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("query") || "";
-  const [results, setResults] = useState<Models.Document[]>([]);
+
+  const [query, setQuery] = useState("");
+  const [resultList, setResultList] = useState<Models.Document[]>([]);
   const [open, setOpen] = useState(false);
+
   const router = useRouter();
+
   const [debouncedQuery] = useDebounce(query, 300);
 
   useEffect(() => {
-    const fetchFiles = async () => {
+    const fetchFileList = async () => {
       if (debouncedQuery.length === 0) {
-        setResults([]);
+        setResultList([]);
         setOpen(false);
         return;
       }
@@ -27,11 +30,11 @@ const Search = () => {
         types: [],
         searchText: debouncedQuery,
       });
-      setResults(fileList.documents);
+      setResultList(fileList.documents);
       setOpen(true);
     };
 
-    fetchFiles();
+    fetchFileList();
   }, [debouncedQuery]);
 
   useEffect(() => {
@@ -40,10 +43,9 @@ const Search = () => {
     }
   }, [searchQuery]);
 
-  const handleClickItem = (file: Models.Document) => {
+  const handleItemClick = (file: Models.Document) => {
     setOpen(false);
-    setResults([]);
-
+    setResultList([]);
     router.push(`/${file.type}?query=${query}`);
   };
 
@@ -67,35 +69,36 @@ const Search = () => {
           placeholder="搜索"
           onChange={(e) => setQuery(e.target.value)}
         />
-
         {open && (
-          <ul className="absolute top-16 left-0 z-50 flex w-full cursor-pointer flex-col gap-3 rounded-2xl bg-white p-4 shadow">
-            {results.length > 0 ? (
-              results.map((file) => (
-                <li
-                  className="flex items-center justify-between"
-                  key={file.$id}
-                  onClick={() => handleClickItem(file)}
-                >
-                  <div className="flex items-center gap-4">
-                    <Thumbnail
-                      type={file.type}
-                      extension={file.extension}
-                      url={file.url}
-                      className="size-9 min-w-9"
-                    />
-                    <p className="truncate text-neutral-600">{file.name}</p>
-                  </div>
+          <div className="absolute top-16 left-0 z-50 flex w-full justify-center">
+            <ul className="flex w-2/3 cursor-pointer flex-col gap-3 rounded-2xl bg-white p-4 shadow">
+              {resultList.length > 0 ? (
+                resultList.map((file) => (
+                  <li
+                    className="flex items-center justify-between rounded p-1 hover:bg-neutral-100"
+                    key={file.$id}
+                    onClick={() => handleItemClick(file)}
+                  >
+                    <div className="flex items-center gap-4">
+                      <Thumbnail
+                        type={file.type}
+                        extension={file.extension}
+                        url={file.url}
+                        className="size-9 min-w-9"
+                      />
+                      <p className="truncate text-neutral-600">{file.name}</p>
+                    </div>
 
-                  <p className="truncate text-neutral-800">
-                    {new Date(file.$createdAt).toLocaleString()}
-                  </p>
-                </li>
-              ))
-            ) : (
-              <p className="text-center text-neutral-600">找不到文件</p>
-            )}
-          </ul>
+                    <p className="truncate text-neutral-800">
+                      {new Date(file.$createdAt).toLocaleString()}
+                    </p>
+                  </li>
+                ))
+              ) : (
+                <p className="text-center text-neutral-600">找不到文件</p>
+              )}
+            </ul>
+          </div>
         )}
       </div>
     </div>

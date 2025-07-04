@@ -50,7 +50,7 @@ const Page = async ({
       </div>
 
       {fileList.total > 0 ? (
-        <div className="grid w-full grid-cols-4 gap-6">
+        <div className="flex w-full flex-wrap gap-6 pb-10">
           {fileList.documents.map((file: Models.Document) => (
             <FileCard key={file.$id} file={file} />
           ))}

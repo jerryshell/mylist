@@ -1,149 +1,141 @@
 {
-    "projectId": "6859d6570009a738e0d5",
-    "projectName": "MyList",
-    "settings": {
-        "services": {
-            "account": true,
-            "avatars": true,
-            "databases": true,
-            "locale": true,
-            "health": true,
-            "storage": true,
-            "teams": true,
-            "users": true,
-            "sites": true,
-            "functions": true,
-            "graphql": true,
-            "messaging": true
-        },
-        "auth": {
-            "methods": {
-                "jwt": true,
-                "phone": true,
-                "invites": true,
-                "anonymous": true,
-                "email-otp": true,
-                "magic-url": true,
-                "email-password": true
-            },
-            "security": {
-                "duration": 31536000,
-                "limit": 0,
-                "sessionsLimit": 10,
-                "passwordHistory": 0,
-                "passwordDictionary": false,
-                "personalDataCheck": false,
-                "sessionAlerts": false,
-                "mockNumbers": []
-            }
-        }
+  "projectId": "6859d6570009a738e0d5",
+  "projectName": "MyList",
+  "settings": {
+    "services": {
+      "account": true,
+      "avatars": true,
+      "databases": true,
+      "locale": true,
+      "health": true,
+      "storage": true,
+      "teams": true,
+      "users": true,
+      "sites": true,
+      "functions": true,
+      "graphql": true,
+      "messaging": true
     },
-    "databases": [
+    "auth": {
+      "methods": {
+        "jwt": true,
+        "phone": true,
+        "invites": true,
+        "anonymous": true,
+        "email-otp": true,
+        "magic-url": true,
+        "email-password": true
+      },
+      "security": {
+        "duration": 31536000,
+        "limit": 0,
+        "sessionsLimit": 10,
+        "passwordHistory": 0,
+        "passwordDictionary": false,
+        "personalDataCheck": false,
+        "sessionAlerts": false,
+        "mockNumbers": []
+      }
+    }
+  },
+  "databases": [
+    {
+      "$id": "6859f5bf003491cd9544",
+      "name": "general",
+      "enabled": true
+    }
+  ],
+  "collections": [
+    {
+      "$id": "6859f69f002722d6c28c",
+      "$permissions": [],
+      "databaseId": "6859f5bf003491cd9544",
+      "name": "userFile",
+      "enabled": true,
+      "documentSecurity": false,
+      "attributes": [
         {
-            "$id": "6859f5bf003491cd9544",
-            "name": "general",
-            "enabled": true
-        }
-    ],
-    "collections": [
+          "key": "name",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 255,
+          "default": null
+        },
         {
-            "$id": "6859f69f002722d6c28c",
-            "$permissions": [],
-            "databaseId": "6859f5bf003491cd9544",
-            "name": "userFile",
-            "enabled": true,
-            "documentSecurity": false,
-            "attributes": [
-                {
-                    "key": "name",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "url",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "format": "url",
-                    "default": null
-                },
-                {
-                    "key": "type",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "elements": [
-                        "document",
-                        "image",
-                        "video",
-                        "audio",
-                        "other"
-                    ],
-                    "format": "enum",
-                    "default": null
-                },
-                {
-                    "key": "bucketFileId",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "userId",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "extension",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "size": 255,
-                    "default": null
-                },
-                {
-                    "key": "size",
-                    "type": "integer",
-                    "required": true,
-                    "array": false,
-                    "min": -9223372036854775808,
-                    "max": 9223372036854775807,
-                    "default": null
-                },
-                {
-                    "key": "sharedUser",
-                    "type": "string",
-                    "required": false,
-                    "array": true,
-                    "size": 1024,
-                    "default": null
-                }
-            ],
-            "indexes": []
-        }
-    ],
-    "buckets": [
+          "key": "url",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "format": "url",
+          "default": null
+        },
         {
-            "$id": "685a02e60020958c42d2",
-            "$permissions": [
-                "read(\"guests\")"
-            ],
-            "fileSecurity": false,
-            "name": "userFile",
-            "enabled": true,
-            "maximumFileSize": 50000000,
-            "allowedFileExtensions": [],
-            "compression": "none",
-            "encryption": true,
-            "antivirus": true
+          "key": "type",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "elements": ["document", "image", "video", "audio", "other"],
+          "format": "enum",
+          "default": null
+        },
+        {
+          "key": "bucketFileId",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 255,
+          "default": null
+        },
+        {
+          "key": "userId",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 255,
+          "default": null
+        },
+        {
+          "key": "extension",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 255,
+          "default": null
+        },
+        {
+          "key": "size",
+          "type": "integer",
+          "required": true,
+          "array": false,
+          "min": -9223372036854775808,
+          "max": 9223372036854775807,
+          "default": null
+        },
+        {
+          "key": "sharedUser",
+          "type": "string",
+          "required": false,
+          "array": true,
+          "size": 1024,
+          "default": null
         }
-    ]
+      ],
+      "indexes": []
+    }
+  ],
+  "buckets": [
+    {
+      "$id": "685a02e60020958c42d2",
+      "$permissions": ["read(\"guests\")"],
+      "fileSecurity": false,
+      "name": "userFile",
+      "enabled": true,
+      "maximumFileSize": 50000000,
+      "allowedFileExtensions": [],
+      "compression": "none",
+      "encryption": true,
+      "antivirus": true
+    }
+  ]
 }

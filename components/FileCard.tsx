@@ -1,42 +1,40 @@
 import { Models } from "node-appwrite";
-import Link from "next/link";
-import Thumbnail from "@/components/Thumbnail";
-import { convertFileSize } from "@/lib/utils";
+import Image from "next/image";
 import { getUserById } from "@/lib/actions/user.actions";
-import ActionDropdown from "./ActionDropdown";
+import { convertFileSize, getFileIcon } from "@/lib/utils";
+import FileCardRenameButton from "./FileCardRenameButton";
+import FileCardDeleteButton from "./FileCardDeleteButton";
 
 const FileCard = async ({ file }: { file: Models.Document }) => {
   const user = await getUserById(file.userId);
 
-  return (
-    <Link
-      href={file.url}
-      target="_blank"
-      className="flex cursor-pointer flex-col gap-6 rounded-2xl bg-white p-4 shadow-sm transition-all hover:shadow-xl"
-    >
-      <div className="flex justify-between">
-        <Thumbnail
-          type={file.type}
-          extension={file.extension}
-          url={file.url}
-          className="!size-20"
-          imageClassName="!size-10"
-        />
+  const isImage = file.type === "image" && file.extension !== "svg";
 
-        <div className="flex flex-col items-end justify-between">
-          <ActionDropdown file={file} />
-          <p className="text-neutral-600">{convertFileSize(file.size)}</p>
+  return (
+    <div className="card bg-base-100 shadow-sm transition-all hover:shadow-xl">
+      <figure>
+        <Image
+          className="mt-4"
+          src={isImage ? file.url : getFileIcon(file.extension, file.type)}
+          alt="thumbnail"
+          width={100}
+          height={100}
+        />
+      </figure>
+      <div className="card-body">
+        <h2 className="card-title line-clamp-2">{file.name}</h2>
+        <p>{convertFileSize(file.size)}</p>
+        <p>{`${new Date(file.$createdAt).toLocaleString()}`}</p>
+        <p>拥有者：{user.email}</p>
+        <div className="card-actions justify-end">
+          <a href={file.url} target="_blank" className="btn btn-primary">
+            下载
+          </a>
+          <FileCardRenameButton file={file} />
+          <FileCardDeleteButton file={file} />
         </div>
       </div>
-
-      <div className="flex flex-col gap-2 text-neutral-800">
-        <p className="truncate font-bold">{file.name}</p>
-        <p className="truncate text-sm text-neutral-600">{`${new Date(file.$createdAt).toLocaleString()}`}</p>
-        <p className="truncate text-sm text-neutral-600">
-          拥有者：{user.email}
-        </p>
-      </div>
-    </Link>
+    </div>
   );
 };
 

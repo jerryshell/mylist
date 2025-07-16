@@ -1,11 +1,11 @@
 "use server";
 
-import { InputFile } from "node-appwrite/file";
-import { getCurrentUser } from "./user.actions";
-import { ID, Models, Query } from "node-appwrite";
-import { buildFileUrl, getFileType, totalSizeInBytes } from "../utils";
 import { createAdminClient } from "../appwrite";
 import { appwriteConfig } from "../appwrite/config";
+import { buildFileUrl, getFileType, totalSizeInBytes } from "../utils";
+import { getCurrentUser } from "./user.actions";
+import { ID, Models, Query } from "node-appwrite";
+import { InputFile } from "node-appwrite/file";
 
 export const uploadFile = async ({ file }: { file: File }) => {
   const currentUser = await getCurrentUser();

@@ -1,12 +1,5 @@
 "use client";
 
-const data = [
-  {
-    value: 1,
-    fill: "white",
-  },
-];
-
 import {
   calculatePercentage,
   convertFileSize,
@@ -19,6 +12,13 @@ import {
   RadialBar,
   RadialBarChart,
 } from "recharts";
+
+const data = [
+  {
+    value: 1,
+    fill: "white",
+  },
+];
 
 const Chart = ({ used }: { used: number }) => {
   return (

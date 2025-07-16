@@ -1,6 +1,6 @@
-import Search from "./Search";
 import FileUploader from "./FileUploader";
 import LogoutButton from "./LogoutButton";
+import Search from "./Search";
 import { Suspense } from "react";
 
 const Header = () => {

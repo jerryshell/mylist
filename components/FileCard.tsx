@@ -1,9 +1,9 @@
-import { Models } from "node-appwrite";
-import Image from "next/image";
+import FileCardDeleteButton from "./FileCardDeleteButton";
+import FileCardRenameButton from "./FileCardRenameButton";
 import { getUserById } from "@/lib/actions/user.actions";
 import { convertFileSize, getFileIcon } from "@/lib/utils";
-import FileCardRenameButton from "./FileCardRenameButton";
-import FileCardDeleteButton from "./FileCardDeleteButton";
+import Image from "next/image";
+import { Models } from "node-appwrite";
 
 const FileCard = async ({ file }: { file: Models.Document }) => {
   const user = await getUserById(file.userId);

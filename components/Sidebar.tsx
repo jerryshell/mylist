@@ -1,7 +1,7 @@
+import SidebarNav from "./SidebarNav";
+import UserInfoCard from "./UserInfoCard";
 import Image from "next/image";
 import React from "react";
-import UserInfoCard from "./UserInfoCard";
-import SidebarNav from "./SidebarNav";
 
 const Sidebar = () => {
   return (

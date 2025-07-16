@@ -1,9 +1,9 @@
 "use client";
 
-import { Models } from "node-appwrite";
-import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
 import { renameFile } from "@/lib/actions/file.actions";
+import { useRouter } from "next/navigation";
+import { Models } from "node-appwrite";
+import { useRef, useState } from "react";
 
 const FileCardRenameButton = ({ file }: { file: Models.Document }) => {
   const router = useRouter();

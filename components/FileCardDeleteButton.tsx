@@ -1,8 +1,8 @@
 "use client";
 
-import { Models } from "node-appwrite";
 import { deleteFile } from "@/lib/actions/file.actions";
 import { useRouter } from "next/navigation";
+import { Models } from "node-appwrite";
 import { useState } from "react";
 
 const FileCardDeleteButton = ({ file }: { file: Models.Document }) => {

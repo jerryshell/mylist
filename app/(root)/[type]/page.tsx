@@ -1,10 +1,10 @@
-import React from "react";
+import FileCard from "@/components/FileCard";
 import Sort from "@/components/Sort";
 import { getUserFileList } from "@/lib/actions/file.actions";
-import { Models } from "node-appwrite";
-import FileCard from "@/components/FileCard";
 import { convertFileSize } from "@/lib/utils";
 import { redirect } from "next/navigation";
+import { Models } from "node-appwrite";
+import React from "react";
 
 const Page = async ({
   searchParams,

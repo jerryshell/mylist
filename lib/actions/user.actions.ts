@@ -1,8 +1,8 @@
 "use server";
 
-import { ID } from "node-appwrite";
-import { cookies } from "next/headers";
 import { createAdminClient, createSessionClient } from "../appwrite";
+import { cookies } from "next/headers";
+import { ID } from "node-appwrite";
 
 export const getCurrentUser = async () => {
   const sessionClient = await createSessionClient();

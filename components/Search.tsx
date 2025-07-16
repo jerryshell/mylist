@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
-import { Models } from "node-appwrite";
-import { useRouter, useSearchParams } from "next/navigation";
 import { getUserFileList } from "@/lib/actions/file.actions";
-import { useDebounce } from "use-debounce";
-import { useEffect, useState } from "react";
 import { getFileIcon } from "@/lib/utils";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Models } from "node-appwrite";
+import { useEffect, useState } from "react";
+import { useDebounce } from "use-debounce";
 
 const Search = () => {
   const searchParams = useSearchParams();

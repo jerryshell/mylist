@@ -1,6 +1,6 @@
-import Image from "next/image";
 import LoginForm from "@/components/LoginForm";
 import { getCurrentUser } from "@/lib/actions/user.actions";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 
 const LoginPage = async () => {

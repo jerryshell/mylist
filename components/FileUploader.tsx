@@ -1,8 +1,8 @@
 "use client";
 
-import { convertFileToUrl, getFileType } from "@/lib/utils";
+import Image from "next/image";
+import { convertFileToUrl, getFileIcon, getFileType } from "@/lib/utils";
 import { ChangeEvent, useEffect, useState } from "react";
-import Thumbnail from "./Thumbnail";
 import { uploadFile } from "@/lib/actions/file.actions";
 import { useRouter } from "next/navigation";
 
@@ -75,16 +75,27 @@ const FileUploader = () => {
           <div className="text-neutral-600">上传中...</div>
           {fileList.map((file, index) => {
             const { type, extension } = getFileType(file.name);
+            const isImage = type === "image" && extension !== "svg";
             return (
               <li
                 key={`${file.name}-${index}`}
                 className="flex h-16 items-center justify-between gap-2 rounded-xl p-2 shadow"
               >
-                <Thumbnail
-                  type={type}
-                  extension={extension}
-                  url={convertFileToUrl(file)}
-                />
+                <div
+                  className={`bg-primary/5 flex size-10 items-center justify-center overflow-hidden rounded-full`}
+                >
+                  <Image
+                    src={
+                      isImage
+                        ? convertFileToUrl(file)
+                        : getFileIcon(extension, type)
+                    }
+                    className={`size-8 object-contain ${isImage && "size-full object-cover object-center"} `}
+                    alt="thumbnail"
+                    width={100}
+                    height={100}
+                  />
+                </div>
 
                 <div className="flex flex-1 flex-col gap-2 truncate text-sm font-semibold">
                   <p className="truncate">{file.name}</p>

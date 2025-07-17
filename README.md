@@ -1,12 +1,12 @@
-# MyList - WIP
+# MyList
 
 _MyList_ 是一个开源、免费、自托管的文件存储和共享平台，让用户可以轻松上传、组织和共享文件。
 
 ## 在线试用
 
-https://mylist-tawny.vercel.app
+<https://mylist-tawny.vercel.app>
 
-**在线试用仅供演示，不保证数据的安全性，所以请勿上传敏感文件到试用平台中，推荐每个用户部署自己的实例**
+在线试用仅供演示，不保证数据的安全性，所以请勿上传敏感文件到试用平台中，推荐每个用户部署自己的实例。
 
 ## 功能
 
@@ -68,12 +68,13 @@ _Appwrite 是一个开源的后端基础设施，可以使用自己的服务器�
 npm run dev
 ```
 
-在浏览器中打开 http://localhost:3000 查看项目。
+在浏览器中打开 <http://localhost:3000> 查看项目。
 
 ## 项目截图
 
-<img src="./readme.img/1.png" width="720"/>
-<img src="./readme.img/2.png" width="720"/>
+<img src="./readme.img/1.png" width="720" alt="screenshot 1"/>
+
+<img src="./readme.img/2.png" width="720" alt="screenshot 2"/>
 
 ## 开源协议
 

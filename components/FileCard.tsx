@@ -28,7 +28,7 @@ const FileCard = async ({ file }: { file: Models.Document }) => {
         <p>拥有者：{user.email}</p>
         <div className="card-actions justify-end">
           <a href={file.url} target="_blank" className="btn btn-primary">
-            下载
+            查看
           </a>
           <FileCardRenameButton file={file} />
           <FileCardDeleteButton file={file} />

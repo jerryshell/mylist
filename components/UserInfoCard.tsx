@@ -16,7 +16,7 @@ const UserInfoCard = async () => {
       />
       <div className="w-full truncate">
         <p>欢迎</p>
-        <p className="truncate font-semibold">{currentUser.email}</p>
+        <p className="truncate text-sm font-semibold">{currentUser.email}</p>
       </div>
     </div>
   );

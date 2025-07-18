@@ -5,7 +5,7 @@ import React from "react";
 
 const Sidebar = () => {
   return (
-    <div className="flex w-100 flex-col overflow-x-auto px-2 py-4">
+    <div className="flex w-80 flex-col overflow-x-auto px-2 py-4">
       <SidebarNav />
       <Image
         src="/images/files-2.png"

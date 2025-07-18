@@ -130,7 +130,7 @@
         {
             "$id": "685a02e60020958c42d2",
             "$permissions": [
-                "read(\"guests\")"
+                "read(\"any\")"
             ],
             "fileSecurity": false,
             "name": "userFile",

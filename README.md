@@ -6,9 +6,9 @@ _MyList_ 是一个开源、免费、自托管的文件存储和共享平台，�
 
 <https://mylist-tawny.vercel.app>
 
-在线试用仅供演示，不保证数据的安全性，所以请勿上传敏感文件到试用平台中，推荐每个用户部署自己的实例。
+在线试用仅供演示，将不定期清空数据，请勿上传敏感文件到试用平台中，推荐每个用户部署自己的实例。
 
-## 功能
+## 平台功能
 
 - 用户认证：使用 Appwrite 的认证系统实现注册、登录和登出功能
 - 文件上传：轻松上传多种文件类型，包括文档、图片、视频、音频和其他，保存所有重要数据
@@ -72,9 +72,9 @@ npm run dev
 
 ## 项目截图
 
-<img src="./readme.img/1.png" width="720" alt="screenshot 1"/>
+<img src="./readme.img/1.jpg" width="720" alt="screenshot 1"/>
 
-<img src="./readme.img/2.png" width="720" alt="screenshot 2"/>
+<img src="./readme.img/2.jpg" width="720" alt="screenshot 2"/>
 
 ## 开源协议
 

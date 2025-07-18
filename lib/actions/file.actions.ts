@@ -28,7 +28,6 @@ export const uploadFile = async ({ file }: { file: File }) => {
     userId: currentUser.$id,
     extension: getFileType(bucketFile.name).extension,
     size: bucketFile.sizeOriginal,
-    sharedUser: [],
   };
 
   return await databases
@@ -52,12 +51,7 @@ const buildQueryList = (
   sort: string,
   limit?: number,
 ) => {
-  const queryList = [
-    Query.or([
-      Query.equal("userId", [currentUser.$id]),
-      Query.contains("sharedUser", [currentUser.email]),
-    ]),
-  ];
+  const queryList = [Query.equal("userId", [currentUser.$id])];
 
   if (types.length > 0) {
     queryList.push(Query.equal("type", types));
@@ -128,27 +122,6 @@ export const renameFile = async ({
     fileId,
     {
       name: newName,
-    },
-  );
-
-  return updatedFile;
-};
-
-export const updateSharedUser = async ({
-  fileId,
-  emailList,
-}: {
-  fileId: string;
-  emailList: string[];
-}) => {
-  const { databases } = await createAdminClient();
-
-  const updatedFile = await databases.updateDocument(
-    appwriteConfig.databaseId,
-    appwriteConfig.collectionUserFileId,
-    fileId,
-    {
-      sharedUser: emailList,
     },
   );
 

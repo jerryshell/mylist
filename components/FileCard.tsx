@@ -1,7 +1,7 @@
 import FileCardDeleteButton from "./FileCardDeleteButton";
 import FileCardRenameButton from "./FileCardRenameButton";
 import { getUserById } from "@/lib/actions/user.actions";
-import { convertFileSize, getFileIcon } from "@/lib/utils";
+import { buildDownloadUrl, convertFileSize, getFileIcon } from "@/lib/utils";
 import Image from "next/image";
 import { Models } from "node-appwrite";
 
@@ -29,6 +29,13 @@ const FileCard = async ({ file }: { file: Models.Document }) => {
         <div className="card-actions justify-end">
           <a href={file.url} target="_blank" className="btn btn-primary">
             查看
+          </a>
+          <a
+            href={buildDownloadUrl(file.bucketFileId)}
+            target="_blank"
+            className="btn btn-accent"
+          >
+            下载
           </a>
           <FileCardRenameButton file={file} />
           <FileCardDeleteButton file={file} />
